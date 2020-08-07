@@ -2,7 +2,7 @@
 
 ## Description
 
-Build a solution for managing a company's employees using node, inquirer, and MySQL.
+Build a solution for managing a company's employees using node, inquirer, and MySQL with a simple prompts!
 
 ## Table of Contents
 
