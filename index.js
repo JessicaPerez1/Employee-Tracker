@@ -231,32 +231,7 @@ function addRoles() {
       });
   });
 }
-// function addRoles() {
-//   inquirer
-//     .prompt([
-//       {
-//         name: "newroleTitle",
-//         type: "input",
-//         message: "Enter a new role title",
-//       },
-//       {
-//         name: "newroleSalary",
-//         type: "input",
-//         message: "Enter the new role Salary",
-//       },
-//     ])
-//     .then(function (reply) {
-//       let newroleArray = [];
-//       let newSalary = [];
-//       console.table("Adding a new role...\n");
-//       console.table("Adding a new salary...\n");
-//       newroleArray.push(reply.newroleTitle);
-//       newSalary.push(reply.newroleSalary);
-//       console.log(newroleArray);
-//       console.log(newSalary);
-//       //figure out how to
-//     });
-// }
+
 //DONE
 function addDepartments() {
   inquirer
@@ -321,7 +296,7 @@ function viewEmployeesByDepartment() {
           function (err, res) {
             if (err) throw err;
             //console.log(res);
-            const departmentName = [];
+            let departmentName = [];
             for (i = 0; i < res.length; i++) {
               if (res[i].department_name === departmentChoice) {
                 departmentName.push(res[i].first_name + " " + res[i].last_name);
@@ -335,10 +310,72 @@ function viewEmployeesByDepartment() {
   });
 }
 
-function viewEmployeesByManager() {}
-//to show name of manager, connect the manager id to an employee id
-//join manager on employee.manager_id = employee.id
-
 function updateEmployeeRole() {
+  let employeeLastName = [];
+  connection.query("SELECT last_name FROM employee", function (err, res) {
+    if (err) throw err;
+    console.log(res);
+    for (var i = 0; i < res.length; i++) {
+      employeeLastName.push(res[i].last_name);
+    }
+    console.log(employeeLastName);
+    //prompt the user to choose employee last name
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          message: "Enter the employee's last name",
+          choices: employeeLastName,
+          name: "name",
+        },
+      ])
+      .then(function (reply) {
+        const lastNameReponse = reply.name;
+        console.log(lastNameReponse);
+        //get roles title from db
+        connection.query("SELECT title FROM roles", function (err, res) {
+          if (err) throw err;
+          //console.log(res);
+          let rolesArray = [];
+          for (var i = 0; i < res.length; i++) {
+            rolesArray.push(res[i].title);
+          }
+          console.log(rolesArray);
+          inquirer
+            .prompt([
+              {
+                type: "list",
+                message: "Pick a role",
+                choices: rolesArray,
+                name: "newrole",
+              },
+            ])
+            .then(function (res) {
+              let roleId = [];
+              for (i = 0; i < res.length; i++) {
+                if (res[i].title === newrole) {
+                  roleId.push(res[i].title);
+                }
+                console.log(roles.id);
+                connection.query(
+                  "UPDATE employee SET ? WHERE ?",
+                  [
+                    {
+                      role_id: roleId,
+                    },
+                    {
+                      last_name: name,
+                    },
+                  ],
+                  function (err, res) {
+                    if (err) throw err;
+                    console.table(res.affectedRows + "employee added \n");
+                  }
+                );
+              }
+            });
+        });
+      });
+  });
   mainMenu();
 }
