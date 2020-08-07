@@ -1,4 +1,4 @@
--- insert data into database
+-- to pre populate my database
 
 INSERT INTO department (department_name)
 VALUES ("Sales"), ("HR"), ("Marketing"), ("IT"), ("Maintenance"), ("Accounting"), ("Engineering"), ("Legal");

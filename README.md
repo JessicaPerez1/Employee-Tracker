@@ -25,7 +25,7 @@ Build a solution for managing a company's employees using node, inquirer, and My
 ### Demo-link-and-Github-repository
 
 - Demo video:
-  ()
+  (https://drive.google.com/file/d/1UMAZ7WmLyQr_BubYFsArBdm4Tq2DsiPN/view)
 - Github repository:
   ![Github repository](https://github.com/JessicaPerez1/Employee-Tracker.git)
 
